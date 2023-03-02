@@ -1,0 +1,35 @@
+http:
+  Address: 0.0.0.0:8000
+  development: false
+debug: true
+oauth:
+  jwt:
+    secretKey: secret
+    accessExpirationTime: 5m
+    refreshExpirationTime: 48h
+
+sql:
+  host: mysql
+  port: 3306
+  username: user
+  password: secret
+  dbName: fidibo
+  maxIdleConnections: 5
+  maxOpenConnections: 10
+  maxLifetimeSeconds: 10
+
+redis:
+  db: 0
+  host: redis
+  port: 6379
+  password: null
+  timeout: 1s
+  username: null
+
+jwt:
+  secretKey: secret
+  accessExpirationTime: 5m
+  
+fidibo:
+  baseURL: 'https://search.fidibo.com'
+  timeout: 20s

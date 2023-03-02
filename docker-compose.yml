@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  mysql:
+    image: 'mysql:5.7'
+    ports:
+      - "3306:3306"
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      MYSQL_DATABASE: fidibo
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+      MYSQL_USER: user
+      MYSQL_PASSWORD: secret
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - "6379:6379"
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - redis_data:/data
+
+  fidibo:
+    build:
+      context: .
+      dockerfile: ./dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    deploy:
+      mode: replicated
+      replicas: 1
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      InternalNetwork: "true"
+
+volumes:
+  mysql_data:
+  redis_data:
